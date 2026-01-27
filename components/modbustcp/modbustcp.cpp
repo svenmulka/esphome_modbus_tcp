@@ -474,7 +474,7 @@ void ModbusTCP::send(uint8_t address, uint8_t function_code, uint16_t start_addr
     }
     
     // Send using ESP-IDF socket
-    int sent = send(tcp_socket_, data_send.data(), data_send.size(), 0);
+    int sent = ::send(tcp_socket_, reinterpret_cast<const char*>(data_send.data()), data_send.size(), 0);
     
     if (sent < 0) {
       ESP_LOGW(TAG, "send failed: %d", errno);
@@ -502,7 +502,7 @@ void ModbusTCP::send_raw(const std::vector<uint8_t> &payload) {
   }
 
   if (tcp_socket_ >= 0 && client_ready_) {
-    int sent = send(tcp_socket_, payload.data(), payload.size(), 0);
+    int sent = ::send(tcp_socket_, reinterpret_cast<const char*>(payload.data()), payload.size(), 0);
     if (sent < 0) {
       ESP_LOGW(TAG, "send_raw failed: %d", errno);
       connection_established_ = false;
