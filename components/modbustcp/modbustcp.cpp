@@ -491,6 +491,10 @@ void ModbusTCP::send(uint8_t address, uint8_t function_code, uint16_t start_addr
     waiting_for_response = address;
     last_send_ = esp_timer_get_time() / 1000;  // Convert microseconds to milliseconds
   }
+  else
+  {
+    ESP_LOGD(TAG, "client not ready or no socket");
+  }
 }
 
 // Helper function for lambdas
@@ -515,6 +519,10 @@ void ModbusTCP::send_raw(const std::vector<uint8_t> &payload) {
     ESP_LOGV(TAG, "Modbus write raw: %s", format_hex_pretty(payload).c_str());
     last_send_ = esp_timer_get_time() / 1000;  // Convert microseconds to milliseconds
   }
+  else
+  {
+    ESP_LOGD(TAG, "client not ready or no socket");
+  }  
 }
 
 #endif  // MODBUSTCP_USE_ASYNC
