@@ -405,9 +405,42 @@ void ModbusTCP::ensure_tcp_client() {
     
     ESP_LOGD(TAG, "client connecting...");
     connection_established_ = (connect_result == 0);
-    if (connection_established_) {
+    if (connection_established_)
+    {
+      ESP_LOGD(TAG, "client connection established.");
       client_ready_ = true;
     }
+  }
+
+  // Checks if the connection has been established.
+  {
+    int so_error = 0;
+    socklen_t len = sizeof(so_error);
+  
+    int grc = ::getsockopt(tcp_socket_, SOL_SOCKET, SO_ERROR, &so_error, &len);
+    if (grc < 0)
+    {
+      ESP_LOGW(TAG, "getsockopt(SO_ERROR) failed errno=%d", errno);
+      close(tcp_socket_);
+      tcp_socket_ = -1;
+      return; // retry later (backoff)
+    }
+  
+    if (so_error == 0)
+    {
+      // connect completed successfully
+      ESP_LOGD(TAG, "client connection established.");
+      connection_established_ = true;
+      client_ready_ = true;
+    }
+    else
+    {
+      // connect completed with error
+      ESP_LOGW(TAG, "TCP connect failed so_error=%d", so_error);
+      close(tcp_socket_);
+      tcp_socket_ = -1;
+      return; // retry later (backoff)
+    }  
   }
 }
 
