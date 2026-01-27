@@ -457,7 +457,7 @@ void ModbusTCP::send(uint8_t address, uint8_t function_code, uint16_t start_addr
   }
 
   if (!network::is_connected()) {
-    // ESP_LOGD(TAG, "network not ready");
+    ESP_LOGD(TAG, "network not ready");
     return;
   }
   ensure_tcp_client();
