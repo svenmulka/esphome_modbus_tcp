@@ -1,0 +1,68 @@
+# --- C-Code Style of IB-Mulka ---
+# --------------------------------
+BasedOnStyle: LLVM
+
+# --- Indentation ---
+UseTab: Always #ForIndentation
+IndentWidth: 4
+TabWidth: 4
+
+# Avoid continuation indentation that produces non-multiple-of-tab layouts
+ContinuationIndentWidth: 4
+
+# Don't do alignment that introduces space-based "pretty" formatting
+AlignAfterOpenBracket: DontAlign
+AlignConsecutiveAssignments: None
+AlignConsecutiveDeclarations: None
+AlignOperands: DontAlign
+AlignTrailingComments: false
+
+# --- Alignment ---
+#  AlignOperands: true
+#  AlignTrailingComments: true
+  
+  
+# Keep access modifiers flush with the class indent (no extra 2 spaces)
+AccessModifierOffset: -4
+IndentAccessModifiers: false
+IndentCaseLabels: false
+IndentCaseBlocks: false
+
+# --- Braces ---
+BreakBeforeBraces: Custom #Allman
+BraceWrapping:
+  AfterClass: true
+  AfterStruct: true
+  AfterEnum: true
+  AfterNamespace: true
+  AfterFunction: true
+  AfterControlStatement: true
+  BeforeElse: true
+  BeforeCatch: true
+  SplitEmptyFunction: true
+  SplitEmptyRecord: true
+  SplitEmptyNamespace: true
+
+# --- Argument / Parameter Layout ---
+#AlignAfterOpenBracket: BlockIndent
+BinPackArguments: false
+BinPackParameters: false
+
+# --- One-liners are evil ---
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: None
+
+AllowAllArgumentsOnNextLine: true
+AllowAllParametersOfDeclarationOnNextLine: true
+PenaltyBreakBeforeFirstCallParameter: 1
+
+# --- Line handling ---
+ColumnLimit: 100
+
+# --- Misc ---
+SpaceBeforeParens: ControlStatements
+
+# --- Pointer / Reference binding ---
+PointerAlignment: Left
+ReferenceAlignment: Left
